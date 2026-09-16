@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>伍钰婷 · 游戏社区运营作品集</title>
+<meta name="description" content="伍钰婷 · 游戏运营 / 游戏社区用户运营作品集 | 资深二次元玩家 × 1年+社区运营实战经验">
+<style>
+/* ============ 基础变量 ============ */
+:root{
+  --bg:#0a0912;
+  --surface:#151321;
+  --surface-2:#1b1829;
+  --border:rgba(255,255,255,.08);
+  --border-strong:rgba(255,255,255,.14);
+  --text:#eae8f2;
+  --muted:#9a96ae;
+  --p1:#a78bfa;
+  --p2:#f472b6;
+  --p3:#5eead4;
+  --max:1120px;
+  --r:18px;
+}
+*,*::before,*::after{box-sizing:border-box;}
+html{scroll-behavior:smooth;scroll-padding-top:88px;}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,-apple-system,sans-serif;
+  line-height:1.75;font-size:15.5px;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+body::before{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(58vw 58vw at 12% -8%, rgba(139,92,246,.22), transparent 62%),
+    radial-gradient(48vw 48vw at 92% 6%, rgba(244,114,182,.14), transparent 62%),
+    radial-gradient(46vw 46vw at 50% 112%, rgba(94,234,212,.09), transparent 62%);
+}
+.grid-lines{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.028) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.028) 1px,transparent 1px);
+  background-size:64px 64px;
+  -webkit-mask-image:radial-gradient(circle at 50% 25%,#000 0%,transparent 72%);
+  mask-image:radial-gradient(circle at 50% 25%,#000 0%,transparent 72%);
+}
+img{max-width:100%;display:block;}
+a{color:inherit;}
+::selection{background:rgba(167,139,250,.35);}
+
+/* 滚动进度条 */
+#progress{
+  position:fixed;top:0;left:0;height:3px;width:0;z-index:300;
+  background:linear-gradient(90deg,var(--p1),var(--p2),var(--p3));
+  box-shadow:0 0 12px rgba(167,139,250,.6);
+}
+
+/* ============ 布局 ============ */
+.container{max-width:var(--max);margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+.section{padding:96px 0;position:relative;z-index:1;}
+.grad{
+  background:linear-gradient(110deg,var(--p1) 0%,var(--p2) 55%,var(--p3) 120%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+
+/* ============ 导航 ============ */
+.nav{position:fixed;top:0;left:0;right:0;z-index:200;transition:.35s ease;}
+.nav-inner{
+  max-width:var(--max);margin:0 auto;padding:20px 24px;
+  display:flex;align-items:center;justify-content:space-between;gap:24px;transition:.35s ease;
+}
+.nav.scrolled{background:rgba(10,9,18,.78);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
+.nav.scrolled .nav-inner{padding:12px 24px;}
+.logo{
+  font-weight:800;font-size:1.08rem;letter-spacing:.04em;text-decoration:none;
+}
+.logo span{color:var(--p2);}
+.nav-links{display:flex;align-items:center;gap:26px;}
+.nav-links a{
+  text-decoration:none;font-size:.92rem;color:var(--muted);
+  transition:.25s;position:relative;
+}
+.nav-links a:hover{color:var(--text);}
+.nav-links a.active{color:var(--text);}
+.nav-links a.active::after{
+  content:"";position:absolute;left:0;right:0;bottom:-6px;height:2px;border-radius:2px;
+  background:linear-gradient(90deg,var(--p1),var(--p2));
+}
+.nav-cta{
+  text-decoration:none;font-size:.9rem;font-weight:600;padding:9px 20px;border-radius:999px;
+  border:1px solid var(--border-strong);background:rgba(255,255,255,.04);transition:.25s;white-space:nowrap;
+}
+.nav-cta:hover{border-color:rgba(167,139,250,.6);background:rgba(167,139,250,.12);}
+.nav-toggle{
+  display:none;flex-direction:column;gap:5px;background:none;border:0;padding:8px;cursor:pointer;
+}
+.nav-toggle span{display:block;width:20px;height:2px;background:var(--text);border-radius:2px;transition:.25s;}
+
+/* ============ Hero ============ */
+.hero{padding:172px 0 84px;position:relative;z-index:1;}
+.hero-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:56px;align-items:center;}
+.badge{
+  display:inline-flex;align-items:center;gap:9px;font-size:.8rem;color:#c9c4dd;
+  padding:7px 15px;border-radius:999px;border:1px solid var(--border-strong);
+  background:rgba(255,255,255,.04);margin-bottom:26px;
+}
+.badge i{
+  width:7px;height:7px;border-radius:50%;background:var(--p3);box-shadow:0 0 10px var(--p3);
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(.82)}}
+.hero h1{
+  font-size:clamp(2.1rem,5vw,3.4rem);line-height:1.22;margin:0 0 20px;
+  font-weight:800;letter-spacing:-.02em;
+}
+.hero-sub{font-size:1rem;color:#cdc9de;margin:0 0 14px;font-weight:500;}
+.hero-desc{color:var(--muted);margin:0 0 34px;font-size:.95rem;max-width:520px;}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:999px;
+  font-size:.93rem;font-weight:600;text-decoration:none;transition:.25s;border:1px solid transparent;
+  white-space:nowrap;cursor:pointer;
+}
+.btn-primary{
+  background:linear-gradient(120deg,var(--p1),var(--p2));color:#150a20;
+  box-shadow:0 12px 32px -12px rgba(167,139,250,.85);
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 18px 40px -14px rgba(244,114,182,.9);}
+.btn-ghost{border-color:var(--border-strong);color:var(--text);background:rgba(255,255,255,.03);}
+.btn-ghost:hover{border-color:rgba(167,139,250,.55);background:rgba(167,139,250,.1);transform:translateY(-2px);}
+
+/* Hero 卡片 */
+.hero-card{
+  border:1px solid var(--border);border-radius:24px;padding:26px;
+  background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.015));
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  box-shadow:0 36px 70px -34px rgba(0,0,0,.95);
+}
+.hero-card-top{display:flex;align-items:center;gap:14px;padding-bottom:20px;border-bottom:1px dashed var(--border);}
+.avatar{
+  width:54px;height:54px;border-radius:16px;flex:0 0 54px;display:grid;place-items:center;
+  font-weight:800;font-size:1.3rem;color:#170b22;
+  background:linear-gradient(135deg,var(--p1),var(--p2));
+  box-shadow:0 10px 24px -10px rgba(244,114,182,.9);
+}
+.hero-card-top h3{margin:0;font-size:1.05rem;}
+.hero-card-top p{margin:2px 0 0;font-size:.82rem;color:var(--muted);}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:22px 0;}
+.stat b{
+  display:block;font-size:1.55rem;font-weight:800;line-height:1.15;
+  background:linear-gradient(120deg,var(--p1),var(--p2));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.stat b span{font-size:.9rem;}
+.stat small{display:block;color:var(--muted);font-size:.76rem;margin-top:3px;line-height:1.5;}
+.hero-card-tags{display:flex;flex-wrap:wrap;gap:8px;padding-top:18px;border-top:1px dashed var(--border);}
+.hero-card-tags span{
+  font-size:.75rem;padding:5px 12px;border-radius:999px;color:#c8c3dc;
+  background:rgba(167,139,250,.12);border:1px solid rgba(167,139,250,.24);
+}
+
+/* ============ 区块标题 ============ */
+.sec-head{margin-bottom:48px;max-width:660px;}
+.sec-tag{
+  font-size:.76rem;letter-spacing:.2em;color:var(--p1);font-weight:700;margin:0 0 12px;
+  text-transform:uppercase;
+}
+.sec-head h2{font-size:clamp(1.6rem,3.4vw,2.25rem);margin:0 0 14px;font-weight:800;letter-spacing:-.01em;}
+.sec-desc{color:var(--muted);margin:0;font-size:.94rem;}
+
+/* ============ 关于我 ============ */
+.about-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
+.about-card{
+  border:1px solid var(--border);border-radius:var(--r);padding:26px;
+  background:linear-gradient(160deg,rgba(255,255,255,.05),rgba(255,255,255,.012));
+  transition:.3s;position:relative;overflow:hidden;
+}
+.about-card::after{
+  content:"";position:absolute;inset:0;border-radius:var(--r);pointer-events:none;
+  background:radial-gradient(340px circle at var(--mx,50%) var(--my,0%),rgba(167,139,250,.14),transparent 70%);
+  opacity:0;transition:.3s;
+}
+.about-card:hover{transform:translateY(-4px);border-color:rgba(167,139,250,.35);}
+.about-card:hover::after{opacity:1;}
+.about-icon{
+  width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:1.15rem;
+  background:rgba(167,139,250,.14);border:1px solid rgba(167,139,250,.26);margin-bottom:16px;
+}
+.about-card h3{margin:0 0 10px;font-size:1.02rem;font-weight:700;}
+.about-card p{margin:0;color:var(--muted);font-size:.88rem;line-height:1.8;}
+
+/* 数据条 */
+.metrics{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:40px;
+  border:1px solid var(--border);border-radius:var(--r);overflow:hidden;
+  background:var(--border);
+}
+.metric{background:rgba(18,16,28,.85);padding:26px 20px;text-align:center;}
+.metric b{
+  display:block;font-size:1.7rem;font-weight:800;
+  background:linear-gradient(120deg,var(--p1),var(--p2));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.metric small{color:var(--muted);font-size:.79rem;}
+
+/* ============ 游戏履历 ============ */
+.games-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
+.game-card{
+  border:1px solid var(--border);border-radius:var(--r);padding:24px;
+  background:linear-gradient(160deg,rgba(255,255,255,.05),rgba(255,255,255,.012));
+  transition:.3s;
+}
+.game-card:hover{transform:translateY(-4px);border-color:rgba(244,114,182,.32);}
+.game-head{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+.game-head h3{margin:0;font-size:1rem;font-weight:700;}
+.game-ico{
+  width:38px;height:38px;border-radius:11px;display:grid;place-items:center;font-size:1.05rem;
+  background:linear-gradient(135deg,rgba(167,139,250,.2),rgba(244,114,182,.16));
+  border:1px solid rgba(255,255,255,.1);
+}
+.game-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px;}
+.game-list li{
+  font-size:.85rem;color:var(--muted);line-height:1.7;padding-left:16px;position:relative;
+}
+.game-list li::before{
+  content:"";position:absolute;left:0;top:.62em;width:6px;height:6px;border-radius:50%;
+  background:linear-gradient(135deg,var(--p1),var(--p2));
+}
+.game-list li strong{color:#dcd8ec;font-weight:600;}
+
+/* ============ 时间线 ============ */
+.timeline{position:relative;padding-left:30px;}
+.timeline::before{
+  content:"";position:absolute;left:7px;top:8px;bottom:8px;width:1px;
+  background:linear-gradient(180deg,rgba(167,139,250,.7),rgba(244,114,182,.4),rgba(94,234,212,.05));
+}
+.tl-item{position:relative;margin-bottom:28px;}
+.tl-item:last-child{margin-bottom:0;}
+.tl-dot{
+  position:absolute;left:-30px;top:26px;width:15px;height:15px;border-radius:50%;
+  background:var(--bg);border:2px solid var(--p1);box-shadow:0 0 0 4px rgba(167,139,250,.12);
+}
+.tl-item.pink .tl-dot{border-color:var(--p2);box-shadow:0 0 0 4px rgba(244,114,182,.12);}
+.tl-item.mint .tl-dot{border-color:var(--p3);box-shadow:0 0 0 4px rgba(94,234,212,.12);}
+.tl-body{
+  border:1px solid var(--border);border-radius:var(--r);padding:24px 26px;
+  background:linear-gradient(160deg,rgba(255,255,255,.05),rgba(255,255,255,.012));
+  transition:.3s;
+}
+.tl-body:hover{border-color:var(--border-strong);transform:translateX(4px);}
+.tl-head{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;flex-wrap:wrap;margin-bottom:12px;}
+.tl-head h3{margin:0;font-size:1.04rem;font-weight:700;}
+.tl-org{margin:3px 0 0;font-size:.85rem;color:var(--p1);font-weight:500;}
+.tl-item.pink .tl-org{color:var(--p2);}
+.tl-item.mint .tl-org{color:var(--p3);}
+.tl-date{
+  font-size:.76rem;color:var(--muted);padding:5px 13px;border-radius:999px;
+  border:1px solid var(--border);background:rgba(255,255,255,.03);white-space:nowrap;
+}
+.tl-tags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px;}
+.tl-tags span{
+  font-size:.73rem;padding:4px 11px;border-radius:999px;color:#bdb8d2;
+  background:rgba(255,255,255,.05);border:1px solid var(--border);
+}
+.tl-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;}
+.tl-list li{
+  font-size:.87rem;color:var(--muted);line-height:1.8;padding-left:18px;position:relative;
+}
+.tl-list li::before{
+  content:"";position:absolute;left:0;top:.72em;width:6px;height:6px;border-radius:2px;
+  background:linear-gradient(135deg,var(--p1),var(--p2));
+}
+.tl-list li b{color:#dcd8ec;font-weight:600;}
+
+/* ============ 技能 ============ */
+.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+.skill-card{
+  border:1px solid var(--border);border-radius:var(--r);padding:22px;
+  background:linear-gradient(160deg,rgba(255,255,255,.05),rgba(255,255,255,.012));
+  transition:.3s;
+}
+.skill-card:hover{transform:translateY(-4px);border-color:rgba(94,234,212,.3);}
+.skill-top{display:flex;align-items:center;gap:11px;margin-bottom:11px;}
+.skill-ico{
+  width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font-size:1rem;
+  background:rgba(94,234,212,.12);border:1px solid rgba(94,234,212,.24);
+}
+.skill-card h3{margin:0;font-size:.95rem;font-weight:700;}
+.skill-card p{margin:0;font-size:.84rem;color:var(--muted);line-height:1.75;}
+
+/* ============ 职业规划 ============ */
+.plan-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
+.plan-card{
+  border:1px solid var(--border);border-radius:var(--r);padding:30px;
+  background:linear-gradient(160deg,rgba(255,255,255,.05),rgba(255,255,255,.012));
+  transition:.3s;position:relative;overflow:hidden;
+}
+.plan-card::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--p1),var(--p2));
+}
+.plan-card.long::before{background:linear-gradient(90deg,var(--p2),var(--p3));}
+.plan-card:hover{transform:translateY(-4px);border-color:var(--border-strong);}
+.plan-label{font-size:.75rem;letter-spacing:.16em;color:var(--p1);font-weight:700;margin:0 0 8px;}
+.plan-card.long .plan-label{color:var(--p3);}
+.plan-card h3{margin:0 0 18px;font-size:1.2rem;font-weight:800;}
+.plan-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px;}
+.plan-list li{font-size:.86rem;color:var(--muted);line-height:1.8;padding-left:18px;position:relative;}
+.plan-list li::before{
+  content:"";position:absolute;left:0;top:.72em;width:6px;height:6px;border-radius:50%;
+  background:linear-gradient(135deg,var(--p1),var(--p2));
+}
+.plan-list li b{color:#dcd8ec;font-weight:600;display:block;margin-bottom:2px;}
+
+/* ============ 联系 ============ */
+.contact-wrap{
+  border:1px solid var(--border);border-radius:26px;padding:56px 40px;text-align:center;
+  background:
+    radial-gradient(60% 120% at 50% 0%,rgba(167,139,250,.16),transparent 70%),
+    linear-gradient(160deg,rgba(255,255,255,.05),rgba(255,255,255,.012));
+  position:relative;overflow:hidden;
+}
+.contact-wrap h2{font-size:clamp(1.6rem,3.4vw,2.2rem);margin:0 0 14px;font-weight:800;}
+.contact-wrap p{color:var(--muted);margin:0 auto 32px;max-width:560px;font-size:.94rem;}
+.contact-grid{display:flex;justify-content:center;flex-wrap:wrap;gap:14px;margin-bottom:32px;}
+.contact-item{
+  display:flex;align-items:center;gap:10px;padding:13px 22px;border-radius:999px;
+  border:1px solid var(--border-strong);background:rgba(255,255,255,.04);
+  font-size:.88rem;text-decoration:none;transition:.25s;
+}
+.contact-item:hover{border-color:rgba(167,139,250,.55);background:rgba(167,139,250,.1);transform:translateY(-2px);}
+.contact-item span{color:var(--muted);font-size:.8rem;}
+.contact-actions{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;}
+
+/* ============ 页脚 ============ */
+footer{
+  border-top:1px solid var(--border);margin-top:80px;padding:34px 0;
+  text-align:center;color:var(--muted);font-size:.8rem;position:relative;z-index:1;
+}
+footer p{margin:0;}
+
+/* ============ 动画 ============ */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .75s cubic-bezier(.2,.7,.3,1),transform .75s cubic-bezier(.2,.7,.3,1);}
+.reveal.in{opacity:1;transform:none;}
+.d1{transition-delay:.08s;}
+.d2{transition-delay:.16s;}
+.d3{transition-delay:.24s;}
+
+/* ============ 响应式 ============ */
+@media(max-width:960px){
+  .hero-grid{grid-template-columns:1fr;gap:44px;}
+  .hero{padding:150px 0 60px;}
+  .about-grid,.games-grid,.plan-grid{grid-template-columns:1fr;}
+  .skills-grid{grid-template-columns:repeat(2,1fr);}
+  .metrics{grid-template-columns:repeat(2,1fr);}
+}
+@media(max-width:860px){
+  .nav-links{
+    position:fixed;top:66px;left:16px;right:16px;flex-direction:column;align-items:stretch;gap:2px;
+    padding:12px;border-radius:18px;background:rgba(16,14,26,.97);border:1px solid var(--border);
+    backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+    opacity:0;visibility:hidden;transform:translateY(-10px);transition:.28s;
+    box-shadow:0 24px 50px -20px rgba(0,0,0,.9);
+  }
+  .nav-links.open{opacity:1;visibility:visible;transform:none;}
+  .nav-links a{padding:10px 14px;border-radius:10px;font-size:.9rem;}
+  .nav-links a:hover,.nav-links a.active{background:rgba(255,255,255,.05);}
+  .nav-links a.active::after{display:none;}
+  .nav-toggle{display:flex;}
+  .nav-cta{display:none;}
+}
+@media(max-width:560px){
+  .section{padding:70px 0;}
+  .container{padding:0 18px;}
+  .skills-grid{grid-template-columns:1fr;}
+  .metrics{grid-template-columns:1fr;}
+  .contact-wrap{padding:40px 22px;}
+  .tl-body{padding:20px;}
+  .hero-card{padding:22px;}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;}
+  .reveal{opacity:1;transform:none;}
+}
+</style>
+</head>
+<body>
+
+<div class="grid-lines"></div>
+<div id="progress"></div>
+
+<!-- ================= 导航 ================= -->
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#top" class="logo">伍钰婷<span>·</span></a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#about">关于我</a>
+      <a href="#games">游戏履历</a>
+      <a href="#intern">实习经历</a>
+      <a href="#projects">项目经历</a>
+      <a href="#skills">技能</a>
+      <a href="#plan">职业规划</a>
+    </nav>
+    <a href="#contact" class="nav-cta">联系我</a>
+    <button class="nav-toggle" id="navToggle" aria-label="打开菜单">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ================= Hero ================= -->
+<section class="hero" id="top">
+  <div class="container hero-grid">
+    <div class="hero-text">
+      <div class="badge"><i></i>随时到岗 · 可实习 6 个月以上 · 一周到岗 5 天</div>
+      <h1>以玩家视角，<br>做有温度的<span class="grad">社区运营</span></h1>
+      <p class="hero-sub">伍钰婷 · 游戏运营 / 游戏社区用户运营 · 广州 / 深圳</p>
+      <p class="hero-desc">
+        汉语言文学科班出身，1 年+ 游戏社区运营实战经验。<br>
+        1800 天《如鸢》核心玩家、6.8w+ 乙女向深度氪金用户——<br>
+        我既懂玩家的「心动点」，也懂数据背后的运营逻辑。
+      </p>
+      <div class="hero-actions">
+        <a href="#intern" class="btn btn-primary">查看作品集 →</a>
+        <a href="#contact" class="btn btn-ghost">联系我</a>
+      </div>
+    </div>
+
+    <aside class="hero-card reveal">
+      <div class="hero-card-top">
+        <div class="avatar">伍</div>
+        <div>
+          <h3>伍钰婷</h3>
+          <p>游戏社区用户运营 · 资深二次元玩家</p>
+        </div>
+      </div>
+      <div class="stat-grid">
+        <div class="stat"><b>1800<span>+</span></b><small>《如鸢》累计登录（天）</small></div>
+        <div class="stat"><b>6.8<span>w+</span></b><small>乙女向游戏累计氪金</small></div>
+        <div class="stat"><b>3000<span>h+</span></b><small>多品类游戏时长</small></div>
+        <div class="stat"><b>1<span> 年+</span></b><small>社区运营实战经验</small></div>
+      </div>
+      <div class="hero-card-tags">
+        <span>用户运营</span><span>内容运营</span><span>社区运营</span>
+        <span>活动策划</span><span>数据复盘</span><span>KOC 维护</span>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- ================= 关于我 ================= -->
+<section class="section" id="about">
+  <div class="container">
+    <div class="sec-head reveal">
+      <p class="sec-tag">01 / About</p>
+      <h2>玩家与运营的<span class="grad">双重身份</span></h2>
+      <p class="sec-desc">
+        以玩家视角深耕社区生态，擅长用优质内容激活用户，实现社区活跃度与用户留存的双重提升。
+      </p>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-card reveal">
+        <div class="about-icon">🎯</div>
+        <h3>社区运营实战积淀</h3>
+        <p>拥有 1 年+ 社区运营实操经验，精通内容生态搭建与用户分层管理，擅长挖掘并维护 KOC 资源，有效沉淀高粘性的核心用户社群。</p>
+      </div>
+      <div class="about-card reveal d1">
+        <div class="about-icon">🚀</div>
+        <h3>0 → 1 活动策划与增长</h3>
+        <p>具备独立策划线上活动的能力，从创意玩法设计到落地执行全流程把控，通过精准的节奏运营显著提升社区活跃度与用户拉新转化。</p>
+      </div>
+      <div class="about-card reveal d2">
+        <div class="about-icon">💡</div>
+        <h3>资深玩家视角的用户洞察</h3>
+        <p>作为深度游戏玩家，能精准捕捉用户的核心需求与痛点，以用户视角产出高共鸣的产品教育内容，真正理解并触达玩家群体的情感诉求。</p>
+      </div>
+      <div class="about-card reveal d3">
+        <div class="about-icon">✍️</div>
+        <h3>汉语言文学的文案积淀</h3>
+        <p>科班出身，具备扎实的文字驾驭与内容编辑能力，擅长撰写品牌故事、产品推文及短视频脚本，兼顾内容的文学性与传播力。</p>
+      </div>
+    </div>
+
+    <div class="metrics reveal">
+      <div class="metric"><b>10+</b><small>数据周报输出</small></div>
+      <div class="metric"><b>50+</b><small>玩家反馈整理同步</small></div>
+      <div class="metric"><b>15%</b><small>社区互动率提升</small></div>
+      <div class="metric"><b>5+</b><small>推动产品问题修复</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 游戏履历 ================= -->
+<section class="section" id="games">
+  <div class="container">
+    <div class="sec-head reveal">
+      <p class="sec-tag">02 / Games</p>
+      <h2>我的<span class="grad">游戏履历</span></h2>
+      <p class="sec-desc">
+        从普通玩家到核心用户，多品类深度体验让我更懂玩家的情感需求与行为逻辑，
+        也为内容运营与用户沟通提供了最真实的洞察基础。
+      </p>
+    </div>
+
+    <div class="games-grid">
+      <div class="game-card reveal">
+        <div class="game-head">
+          <div class="game-ico">🎴</div>
+          <h3>二次元 &amp; 卡牌策略</h3>
+        </div>
+        <ul class="game-list">
+          <li><strong>《明日方舟》</strong>开服玩家，累计 800h+，氪金 200+</li>
+          <li><strong>《物华弥新》</strong>内测及开服玩家；<strong>《阴阳师》</strong>等累计 1000h+</li>
+          <li><strong>《如鸢》／《代号鸢》</strong>累计登录超 1800 天，总氪金 6.8w+，深度理解女性向卡牌策略品类的用户需求与付费心理</li>
+        </ul>
+      </div>
+
+      <div class="game-card reveal d1">
+        <div class="game-head">
+          <div class="game-ico">💗</div>
+          <h3>女性向 &amp; 互动叙事</h3>
+        </div>
+        <ul class="game-list">
+          <li><strong>《光与夜之恋》</strong>1297 天、<strong>《恋与深空》</strong>1000 天，深度体验乙女向游戏的长线运营与内容节奏</li>
+          <li><strong>《未定事件簿》《绘旅人》</strong>内测玩家，具备多款产品内测经验</li>
+          <li><strong>《暖暖》IP</strong>氪金 300+，无限暖暖开服 1.8 版本前全勤</li>
+          <li><strong>《易次元》</strong>300h+（氪金 100+），熟悉互动叙事品类的用户生态</li>
+        </ul>
+      </div>
+
+      <div class="game-card reveal">
+        <div class="game-head">
+          <div class="game-ico">🗺️</div>
+          <h3>MMO &amp; 开放世界</h3>
+        </div>
+        <ul class="game-list">
+          <li><strong>《燕云十六声》</strong>开服玩家，200h+，1.7 版本前主支线全清</li>
+          <li><strong>《一梦江湖》</strong>开服玩家（200h+）</li>
+          <li><strong>《光遇》</strong>200h+</li>
+        </ul>
+      </div>
+
+      <div class="game-card reveal d1">
+        <div class="game-head">
+          <div class="game-ico">🏡</div>
+          <h3>模拟经营</h3>
+        </div>
+        <ul class="game-list">
+          <li><strong>《星露谷物语》</strong>200h+（25 成就）；<strong>《SIM4》</strong>100h+（50+ MOD）</li>
+          <li>《过山车之星》《城市天际线》《桃园深处有人家》《江南百景图》《我的休闲时光》《童话师》《小岛日记》《飞机大厨》《房产达人》等，合计 1000h+</li>
+        </ul>
+      </div>
+
+      <div class="game-card reveal">
+        <div class="game-head">
+          <div class="game-ico">🧩</div>
+          <h3>休闲益智 &amp; 三消</h3>
+        </div>
+        <ul class="game-list">
+          <li><strong>《梦幻花园》</strong>832 关、<strong>《梦幻家园》</strong>1286 关、《梦幻消除》主线 80-3</li>
+          <li>《开心消消乐》《贪吃蛇》《羊了个羊》《抓大鹅》《旅行青蛙》等，累计 1000h+</li>
+        </ul>
+      </div>
+
+      <div class="game-card reveal d1">
+        <div class="game-head">
+          <div class="game-ico">🔍</div>
+          <h3>玩家视角的运营洞察</h3>
+        </div>
+        <ul class="game-list">
+          <li>以核心玩家身份沉浸式体验产品，精准洞察不同品类用户的需求痛点、社交诉求与付费意愿</li>
+          <li>为游戏运营、社群活动策划提供真实且可落地的用户视角参考</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 实习经历 ================= -->
+<section class="section" id="intern">
+  <div class="container">
+    <div class="sec-head reveal">
+      <p class="sec-tag">03 / Experience</p>
+      <h2>实习<span class="grad">经历</span></h2>
+      <p class="sec-desc">用户运营 × 内容运营 × 社区运营，用数据说话，用内容连接玩家。</p>
+    </div>
+
+    <div class="timeline">
+      <article class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <div class="tl-head">
+            <div>
+              <h3>游戏运营助理</h3>
+              <p class="tl-org">武汉昀路安洋信息技术有限公司</p>
+            </div>
+            <span class="tl-date">2026.05 – 2026.07</span>
+          </div>
+          <div class="tl-tags"><span>用户运营</span><span>内容运营</span><span>社区运营</span></div>
+          <ul class="tl-list">
+            <li><b>用户运营：</b>监控各平台活跃 / 流失 / 新增数据，结合广告投放节奏分析波动原因，累计输出周报 10+ 份。识别学生假期周期性流失、闪退等技术问题，针对性提出推送时间调整与版本修复建议，推动产品侧问题修复 5+ 项。日均回复私信与评论 50+ 条，收集玩家反馈并分类整理，形成反馈文档提交产品团队。</li>
+            <li><b>内容运营：</b>发布版本公告、活动通知及新增内容（表情包、二创素材等）20+ 篇。结合游戏特色策划二创内容，活动期间社区互动率提升约 15%，有效提升用户粘性。</li>
+            <li><b>社区运营：</b>维护微信游戏圈、TapTap 等平台社区氛围，引导用户讨论，及时响应玩家问题。汇总玩家对玩法、体验的反馈意见 50+ 条，定期提交产品团队，推动优化建议落地。</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="tl-item pink reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <div class="tl-head">
+            <div>
+              <h3>小红书与抖音运营助理</h3>
+              <p class="tl-org">「徐大金」自媒体账号（10w+ 粉丝）</p>
+            </div>
+            <span class="tl-date">2025.06 – 2025.09</span>
+          </div>
+          <div class="tl-tags"><span>数据监控</span><span>社群运营</span><span>视频剪辑</span></div>
+          <ul class="tl-list">
+            <li><b>数据监控与分析：</b>每日监控播放量、涨粉及互动率等核心指标，追踪内容表现趋势。定期输出数据复盘报告，分析爆款特征与流量波动原因，反哺内容策略。</li>
+            <li><b>社群与用户运营：</b>管理评论区与私信，及时回复并分类整理用户反馈、汇总上报。维护粉丝群秩序，引导话题讨论，提升活跃度与粘性。</li>
+            <li><b>口播视频剪辑：</b>负责账号口播类短视频的剪辑与后期制作，独立完成字幕校对、节奏把控、配乐音效与画面包装，累计产出 20 条成片，保障账号每周一更的更新节奏。</li>
+          </ul>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 项目经历 ================= -->
+<section class="section" id="projects">
+  <div class="container">
+    <div class="sec-head reveal">
+      <p class="sec-tag">04 / Projects</p>
+      <h2>项目<span class="grad">经历</span></h2>
+      <p class="sec-desc">从内容创作到社群运营，从 0 到 1 的私域搭建，再到多方资源统筹的项目管理。</p>
+    </div>
+
+    <div class="timeline">
+      <article class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <div class="tl-head">
+            <div>
+              <h3>游戏内容创作与社群运营实践</h3>
+              <p class="tl-org">个人项目 · 内容 / 社群</p>
+            </div>
+            <span class="tl-date">长期</span>
+          </div>
+          <div class="tl-tags"><span>攻略创作</span><span>内测反馈</span><span>500+ 人社群</span></div>
+          <ul class="tl-list">
+            <li><b>内容创作：</b>独立完成《代号鸢》游戏攻略，覆盖角色培养、关卡通关等核心玩法，在 TapTap、小红书等平台发布，累计获赞与收藏超 1,000 次；制作《代号鸢》主题剪辑视频，在小红书发布，获赞超 5,000 次。</li>
+            <li><b>内测反馈：</b>参与《小岛日记》《童话师》等游戏内测，撰写体验反馈报告，从玩家视角提出玩法优化建议共 10 余条，其中约 5–6 条被开发团队采纳。</li>
+            <li><b>社群管理：</b>在《代号鸢》同人粉丝群担任管理员，负责日常社群维护、话题引导、用户答疑，管理群成员 500 余人，持续提升社群活跃度与用户粘性。</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="tl-item pink reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <div class="tl-head">
+            <div>
+              <h3>棉花娃娃独立开团项目 · 团长</h3>
+              <p class="tl-org">全流程项目统筹 · 供应链协同</p>
+            </div>
+            <span class="tl-date">2023.09 – 2024.08</span>
+          </div>
+          <div class="tl-tags"><span>项目排期</span><span>风险品控</span><span>活动策划</span></div>
+          <ul class="tl-list">
+            <li><b>全流程项目统筹：</b>作为团长独立负责项目，统筹设计师、工厂、物流等多方资源，制定项目排期并跟进从设计、打样、生产到发货的全流程，确保各环节按计划推进。</li>
+            <li><b>风险与品控管理：</b>在生产环节主动发现工艺瑕疵，及时沟通工厂返工调整，保障最终产品品质，维护项目口碑。</li>
+            <li><b>活动策划与执行：</b>策划预售期优惠活动与开箱返图激励活动，有效提升用户参与感与复购率。</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="tl-item mint reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <div class="tl-head">
+            <div>
+              <h3>三下乡助农实践 · 私域运营负责人</h3>
+              <p class="tl-org">微信私域社群 0 → 1 搭建与全案运营</p>
+            </div>
+            <span class="tl-date">2024.05 – 2024.06</span>
+          </div>
+          <div class="tl-tags"><span>私域搭建</span><span>社群转化</span><span>直播协作</span></div>
+          <ul class="tl-list">
+            <li><b>私域用户服务体系搭建：</b>独立运营微信社群进行荔枝预售，通过朋友圈种草、群内知识答疑建立信任，实施「群接龙」工具促成转化，3 天售出 50 斤。</li>
+            <li><b>VIP 用户初步探索：</b>在服务过程中识别并重点维护复购意愿强的核心买家，提供优先选果、物流跟踪等差异化服务。</li>
+            <li><b>直播协作与内容支持：</b>协助助农直播，梳理产品卖点并配合主播互动，承接公域流量导入的咨询，完成单场数千元销售额。</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <div class="tl-head">
+            <div>
+              <h3>动漫社团 · 组织部部长</h3>
+              <p class="tl-org">广东石油化工学院</p>
+            </div>
+            <span class="tl-date">2024.09 – 2025.06</span>
+          </div>
+          <div class="tl-tags"><span>活动策划</span><span>部门统筹</span><span>用户留存</span></div>
+          <ul class="tl-list">
+            <li><b>活动策划与组织：</b>担任组织部部长期间，策划并组织多场主题线下聚会，每场活动参与人数达 20–30 人，负责方案设计、场地协调与现场执行全流程。</li>
+            <li><b>部门统筹管理：</b>统筹组织部日常管理工作，制定学期活动排期、协调跨部门分工、对接管理社团成员 30 余人，保障各项工作有序推进。</li>
+            <li><b>主题 Cos 聚会：</b>策划并执行主题 Cos 聚会活动，独立完成活动主题制定、场地协调、报名组织与现场执行全流程。</li>
+            <li><b>活跃度与留存：</b>通过定期组织游戏主题聚会与交流活动，有效提升社团活跃度与成员粘性。</li>
+          </ul>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 技能 ================= -->
+<section class="section" id="skills">
+  <div class="container">
+    <div class="sec-head reveal">
+      <p class="sec-tag">05 / Skills</p>
+      <h2>技能<span class="grad">工具箱</span></h2>
+      <p class="sec-desc">扎实的工具硬技能 + 系统化的运营思维，构建高效全面的运营竞争力。</p>
+    </div>
+
+    <div class="skills-grid">
+      <div class="skill-card reveal">
+        <div class="skill-top"><div class="skill-ico">✍️</div><h3>文案策划</h3></div>
+        <p>熟悉 TapTap、小红书、抖音等内容生态，能独立选题并撰写游戏攻略、评测及社区帖。</p>
+      </div>
+      <div class="skill-card reveal d1">
+        <div class="skill-top"><div class="skill-ico">💬</div><h3>社群运营</h3></div>
+        <p>有 QQ / 微信群管理经验，擅长用户答疑、话题引导与氛围维护，能提升社群活跃与用户粘性。</p>
+      </div>
+      <div class="skill-card reveal d2">
+        <div class="skill-top"><div class="skill-ico">🎪</div><h3>活动统筹</h3></div>
+        <p>能独立完成活动方案设计、资源协调与全流程执行，把控节奏与落地效果。</p>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-top"><div class="skill-ico">📊</div><h3>数据分析</h3></div>
+        <p>熟练使用 Excel、AI 进行数据处理与分析，能通过用户反馈与数据洞察优化运营策略。</p>
+      </div>
+      <div class="skill-card reveal d1">
+        <div class="skill-top"><div class="skill-ico">🗂️</div><h3>办公软件</h3></div>
+        <p>熟练使用 Office（Word / Excel / PPT），具备文档排版与汇报材料制作能力。</p>
+      </div>
+      <div class="skill-card reveal d2">
+        <div class="skill-top"><div class="skill-ico">🎬</div><h3>视频剪辑</h3></div>
+        <p>具备视频剪辑能力（剪映、Pr），能独立完成游戏素材采集与后期制作。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 职业规划 ================= -->
+<section class="section" id="plan">
+  <div class="container">
+    <div class="sec-head reveal">
+      <p class="sec-tag">06 / Plan</p>
+      <h2>我的<span class="grad">职业规划</span></h2>
+      <p class="sec-desc">
+        我认为，游戏社区用户运营不仅是管理用户，更是创造和维护一个有生命力的玩家生态，
+        让游戏从产品延伸为玩家的精神聚集地与社交载体。
+      </p>
+    </div>
+
+    <div class="plan-grid">
+      <div class="plan-card reveal">
+        <p class="plan-label">SHORT TERM · 1–2 年</p>
+        <h3>快速融入，独当一面</h3>
+        <ul class="plan-list">
+          <li><b>快速融入团队与业务</b>深入学习产品与用户画像，快速适应团队协作节奏，熟悉社区运营的业务逻辑与工作流程，在短期内成长为能独当一面的运营。</li>
+          <li><b>深耕核心专业能力</b>持续打磨用户运营、内容策划与活动落地能力，主动承接更具挑战性的任务，争取独立负责单一产品线或新媒体渠道的整体运营。</li>
+          <li><b>沉淀数据驱动的运营成果</b>以数据复盘优化运营动作，提升用户留存、互动率与活跃度，沉淀可复用的社区运营方法论。</li>
+        </ul>
+      </div>
+
+      <div class="plan-card long reveal d1">
+        <p class="plan-label">LONG TERM · 3–5 年</p>
+        <h3>成为资深社区运营专家</h3>
+        <ul class="plan-list">
+          <li><b>成长为领域资深运营专家</b>积累深厚的行业经验与实操案例，具备独立制定并落地中长期社区发展策略的能力，统筹规划社区发展方向，解决复杂运营难题。</li>
+          <li><b>构建完善的用户与 KOC 生态</b>搭建系统化的用户成长与激励体系，挖掘、培育并维护核心 KOC 与社区意见领袖，打造高粘性、高参与度的社区圈层文化。</li>
+          <li><b>推动社区破圈与商业价值延伸</b>结合市场趋势与产品价值，探索社区与品牌、商业化的联动模式，让社区成为产品传播与用户增长的核心引擎。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 联系 ================= -->
+<section class="section" id="contact">
+  <div class="container">
+    <div class="contact-wrap reveal">
+      <h2>期待与你<span class="grad">共创精彩</span></h2>
+      <p>
+        我是一名具备全链路运营思维与扎实实战经验的游戏社区运营人才，
+        非常渴望能有机会加入贵团队，将对游戏的热爱与运营技能转化为实际的社区增长成果。
+      </p>
+      <div class="contact-grid">
+        <a class="contact-item" href="mailto:3365645535@qq.com">📮 <span>3365645535@qq.com</span></a>
+        <a class="contact-item" href="tel:15917428969">📱 <span>15917428969</span></a>
+        <div class="contact-item">📍 <span>广州 / 深圳 · 随时到岗</span></div>
+      </div>
+      <div class="contact-actions">
+        <a class="btn btn-primary" href="mailto:3365645535@qq.com">发送邮件 →</a>
+        <a class="btn btn-ghost" href="https://docs.qq.com/s/8AYY7aOOSoyuLQ_sK-H5UG" target="_blank" rel="noopener">查看完整作品集文档</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>© 2026 伍钰婷 · 游戏社区运营作品集 · 用热爱驱动运营</p>
+  </div>
+</footer>
+
+<script>
+/* ========== 导航滚动状态 + 进度条 ========== */
+const nav = document.getElementById('nav');
+const progress = document.getElementById('progress');
+
+function onScroll(){
+  const y = window.scrollY;
+  nav.classList.toggle('scrolled', y > 40);
+
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  progress.style.width = (h > 0 ? (y / h) * 100 : 0) + '%';
+}
+window.addEventListener('scroll', onScroll, {passive:true});
+onScroll();
+
+/* ========== 移动端菜单 ========== */
+const navToggle = document.getElementById('navToggle');
+const navLinks = document.getElementById('navLinks');
+
+navToggle.addEventListener('click', () => {
+  navLinks.classList.toggle('open');
+});
+navLinks.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => navLinks.classList.remove('open'));
+});
+
+/* ========== 滚动揭示动画 ========== */
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('in');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, {threshold: 0.12, rootMargin: '0px 0px -60px 0px'});
+
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+/* ========== 导航高亮当前区块 ========== */
+const sections = [...document.querySelectorAll('section[id]')];
+const linkMap = new Map();
+navLinks.querySelectorAll('a').forEach(a => {
+  linkMap.set(a.getAttribute('href').slice(1), a);
+});
+
+const spyObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.querySelectorAll('a').forEach(a => a.classList.remove('active'));
+      const link = linkMap.get(entry.target.id);
+      if (link) link.classList.add('active');
+    }
+  });
+}, {rootMargin: '-45% 0px -50% 0px'});
+
+sections.forEach(s => spyObserver.observe(s));
+
+/* ========== 卡片跟随鼠标的光晕 ========== */
+document.querySelectorAll('.about-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+    card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+  });
+});
+
+/* ========== 平滑锚点（兼容旧浏览器） ========== */
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+  link.addEventListener('click', e => {
+    const id = link.getAttribute('href');
+    if (id.length < 2) return;
+    const target = document.querySelector(id);
+    if (target) {
+      e.preventDefault();
+      const top = target.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({top, behavior: 'smooth'});
+    }
+  });
+});
+</script>
+</body>
+</html>
